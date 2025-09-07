@@ -4,7 +4,6 @@ services:
     env: python
     plan: free
     region: oregon
-    pythonVersion: 3.11.9
     buildCommand: |
       python -V
       pip install --upgrade pip setuptools wheel
@@ -22,7 +21,10 @@ services:
         fromDatabase:
           name: dsdash-db
           property: connectionString
+      - key: PYTHON_VERSION            # ← AQUI fijas la versión
+        value: 3.11.9
 
 databases:
   - name: dsdash-db
     plan: free
+
