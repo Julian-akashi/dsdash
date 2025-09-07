@@ -47,13 +47,19 @@ TEMPLATES = [{
 WSGI_APPLICATION = "dsdash.wsgi.application"
 
 # Database: SQLite local, Postgres in Render via DATABASE_URL
+db_url = os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+
+# Habilita SSL SOLO si es Postgres
+is_pg = db_url.startswith("postgres://") or db_url.startswith("postgresql://")
+
 DATABASES = {
     "default": dj_database_url.parse(
-        os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        db_url,
         conn_max_age=600,
-        ssl_require=True,
+        ssl_require=is_pg,  # True solo en Postgres, False en SQLite
     )
 }
+
 
 # Static files
 STATIC_URL = "/static/"
