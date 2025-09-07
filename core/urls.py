@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import upload_csv, list_datasets, profile, top_categories, series_por_fecha, delete_dataset,  
+from .views import upload_csv, list_datasets, profile, top_categories, series_por_fecha, delete_dataset
 
 urlpatterns = [
     path('upload', upload_csv),
