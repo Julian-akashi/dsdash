@@ -56,9 +56,10 @@ def series_por_fecha(request, dataset_id: int):
     series = timeseries_counts(df, date_col)
     return JsonResponse(series, safe=False)
 
+@csrf_exempt
 def delete_dataset(request, dataset_id: int):
-    if request.method != 'DELETE':
-        return HttpResponseBadRequest('Usa método DELETE')
+    if request.method != "DELETE":
+        return HttpResponseBadRequest("Usa método DELETE")
     ds = get_object_or_404(Dataset, pk=dataset_id)
     ds.delete()
-    return JsonResponse({'ok': True})
+    return JsonResponse({"ok": True, "deleted_id": dataset_id})
