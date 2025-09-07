@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from .models import Dataset, Record
 from .utils import df_from_dataset, basic_profile, timeseries_counts
+from .models import Dataset
 
 def list_datasets(request):
     data = [{'id': d.id, 'name': d.name, 'rows': d.records.count(), 'uploaded_at': d.uploaded_at.isoformat()}
@@ -54,3 +55,10 @@ def series_por_fecha(request, dataset_id: int):
     date_col = request.GET.get('col')
     series = timeseries_counts(df, date_col)
     return JsonResponse(series, safe=False)
+
+def delete_dataset(request, dataset_id: int):
+    if request.method != 'DELETE':
+        return HttpResponseBadRequest('Usa método DELETE')
+    ds = get_object_or_404(Dataset, pk=dataset_id)
+    ds.delete()
+    return JsonResponse({'ok': True})
