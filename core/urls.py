@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:dataset_id>/profile', profile),
     path('<int:dataset_id>/categories', top_categories),
     path('<int:dataset_id>/timeseries', series_por_fecha),
+    path('<int:dataset_id>/delete', delete_dataset),  # <- nuevo
 ]
