@@ -9,10 +9,7 @@ services:
       pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
-startCommand: |
-  python manage.py makemigrations --noinput && \
-  python manage.py migrate --noinput && \
-  gunicorn dsdash.wsgi:application --preload --workers=2 --timeout=120
+    startCommand: "python manage.py migrate --noinput && gunicorn dsdash.wsgi:application --preload --workers=2 --timeout=120"
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -22,7 +19,7 @@ startCommand: |
         fromDatabase:
           name: dsdash-db
           property: connectionString
-      - key: PYTHON_VERSION            # ← AQUI fijas la versión
+      - key: PYTHON_VERSION
         value: 3.11.9
 
 databases:
